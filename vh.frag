@@ -19,12 +19,13 @@ uniform float IMPACT;
 
 void main(void) {
     vec2 uv = gl_FragCoord.xy / u_resolution.xy;
+    float tt = mod(u_time, 99.);
 
     vec4 oI = o = texture(tex, uv);
 
     float split;
     vec2 edge1 = vec2(0), edge2 = vec2(1), span;
-    split = ((floor(u_time * 3.) + floor(u_time * 5.) + floor(u_time * 7.)) * PI) * .2 + .4;
+    split = ((floor(tt * 3.) + floor(tt * 5.) + floor(tt * 7.)) * PI) * .2 + .4;
     for(int i = 0; i < 14; i++) {
         int dir = i % 2;
         span[dir] = edge2[dir] - edge1[dir];

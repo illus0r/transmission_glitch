@@ -21,7 +21,8 @@ out vec4 o;
 // }
 
 void main (void) {
-    vec2 uv = gl_FragCoord.xy/1024.;
+    vec2 uv = gl_FragCoord.xy/u_resolution;
+    // u_tex_res;
     uv.y = 1. - uv.y;
     o = texture(tex, uv);
     o.a = 1.;

@@ -15,7 +15,7 @@ uniform float IMPACT;
 #define PI 3.1415
 
 // #pragma glslify: snoise2D = require(../modules/math/glsl-noise/simplex/2d.glsl)
-#pragma glslify: sn = require(../modules/math/glsl-noise/simplex/3d.glsl)
+#pragma glslify: sn = require(./node_modules/glsl-noise/simplex/3d.glsl)
 #pragma glslify: rnd = require(glsl-random)
 
 #define col(c) -cos((pow(vec3(c), pw) + off) * 2. * PI) * mul + add
@@ -43,5 +43,5 @@ void main (void) {
 
     // o.rgb = fract(o.rgb*10.);
     o.rgb= mix(o.rgb, step(.5, col(uv.x*100.*id))*2., IMPACT);
-    // o.a = 1.;
+    o.a = 1.;
 }

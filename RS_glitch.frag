@@ -7,6 +7,7 @@ uniform vec2 u_tex_res;
 uniform sampler2D backbuffer;
 // uniform float midi[64];
 uniform float u_time;
+uniform float IMPACT;
 uniform vec4 palette[5];
 out vec4 o;
 
@@ -17,8 +18,8 @@ out vec4 o;
 			(SPEED * (.5*sin(u_time*7.)+sin(u_time*5.)+u_time*8.)))*.5+.5)
 // #define rnd(x) (sin(20.*x + \
 // 			floor(SPEED * (.5*sin(u_time*7.)+sin(u_time*5.)+u_time*8.)))*.5+.5)
-#define ABBERATION_MAX .1
-#define DISTORTION_MAX .01
+#define ABBERATION_MAX (.4*IMPACT)
+#define DISTORTION_MAX (.04*IMPACT)
 #define SPEED 1.
 
 
@@ -60,6 +61,6 @@ void main (void) {
     o.r = texture(tex,uv).r;
     o.g = texture(tex,uv+aberration).g;
     o.b = texture(tex,uv+aberration*2.).b;
-    o *= 1. - smoothstep(.99, 1.05, blackness);
+    o *= mix(1., 1. - smoothstep(.99, 1.05, blackness),IMPACT);
     o.a = 1.;
 }
