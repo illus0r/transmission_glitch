@@ -1,8 +1,9 @@
 'use strict';
+
+
 let twgl = require('twgl.js')
 let chroma = require('chroma-js')
-import {Pane} from 'tweakpane'
-
+import { Pane } from 'tweakpane'
 
 let timePrev = +new Date()
 let time = 0
@@ -109,7 +110,7 @@ windowResized()
 // });
 
 var img = twgl.createTexture(gl, {
-  src:"face.jpg",
+  src: "face.jpg",
   crossOrigin: '',
 });
 
@@ -119,36 +120,37 @@ passes = {
     size: 1024,
     texture: img,
   }),
-  stripes: new Pass({
-    frag: require('./stripes.frag'),
+  // faceForTestCard: new Pass({
+  //   frag: require('./faceForTestCard.frag'),
+  //   size: 1024,
+  //   texture: img,
+  // }),
+  testcard: new Pass({
+    frag: require('./testcard.frag'),
     size: 1024,
   }),
-  vh: new Pass({
-    frag: require('./vh.frag'),
-    size: 1024,
-  }),  
-  rsglitch: new Pass({
-    frag: require('./RS_glitch.frag'),
-    size: 1024,
-  }),
+  // vh: new Pass({
+  //   frag: require('./vh.frag'),
+  //   size: 1024,
+  // }),
+  // rsglitch: new Pass({
+  //   frag: require('./RS_glitch.frag'),
+  //   size: 1024,
+  // }),
 }
 
 
 const PARAMS = {
-  stripes: 0.05,
-  vh: 0.2,
-  rsglitch: 0.3,
+  testcard: 0.5,
 };
 
 const pane = new Pane();
-pane.addInput(PARAMS, 'stripes',{min: 0,max: 1,});
-pane.addInput(PARAMS, 'vh',{min: 0,max: 1,});
-pane.addInput(PARAMS, 'rsglitch',{min: 0,max: 1,});
+pane.addInput(PARAMS, 'testcard', { min: 0, max: 1, });
 
 
 
 function draw() {
-  if(!passes || !passes.rsglitch || !passes.rsglitch.draw) return;
+  if (!passes || !passes.init || !passes.init.draw) return;
 
   let b
   passes.init.draw({
@@ -157,43 +159,43 @@ function draw() {
       // u_resolution: [canvas.width, canvas.height],
       u_resolution: [1024, 1024],
       // u_tex_res: [1024, 1024],
-},
+    },
     // target: 'screen',
     target: 'self',
   })
   b = passes.init.b
-  passes.stripes.draw({
+  passes.testcard.draw({
     uniforms: {
       u_time: time / 1000,
       tex: b,
-      u_resolution: [1024, 1024],
-      // u_resolution: [canvas.width, canvas.height],
-      IMPACT: PARAMS.stripes,
-    },
-    // target: 'screen',
-    target: 'self',
-  })
-  b = passes.stripes.b
-  passes.vh.draw({
-    uniforms: {
-      u_time: time / 1000,
-      tex: b,
-      u_resolution: [1024, 1024],
-      // u_resolution: [canvas.width, canvas.height],
-      IMPACT: PARAMS.vh,
-    },
-    target: 'self',
-  })
-  b = passes.vh.b
-  passes.rsglitch.draw({
-    uniforms: {
-      u_time: time / 1000,
-      tex: b,
+      // u_resolution: [1024, 1024],
       u_resolution: [canvas.width, canvas.height],
-      IMPACT: PARAMS.rsglitch,
+      IMPACT: PARAMS.testcard,
     },
     target: 'screen',
+    // target: 'self',
   })
+  // b = passes.stripes.b
+  // passes.vh.draw({
+  //   uniforms: {
+  //     u_time: time / 1000,
+  //     tex: b,
+  //     u_resolution: [1024, 1024],
+  //     // u_resolution: [canvas.width, canvas.height],
+  //     IMPACT: PARAMS.vh,
+  //   },
+  //   target: 'self',
+  // })
+  // b = passes.vh.b
+  // passes.rsglitch.draw({
+  //   uniforms: {
+  //     u_time: time / 1000,
+  //     tex: b,
+  //     u_resolution: [canvas.width, canvas.height],
+  //     IMPACT: PARAMS.rsglitch,
+  //   },
+  //   target: 'screen',
+  // })
 
   tick++
 }
@@ -352,6 +354,6 @@ canvas.addEventListener('click', event => {
   let gui = document.querySelector('.tp-dfwv')
   let guiOpacity = gui.style.opacity
   // console.log(guiOpacity)
-  if(guiOpacity === '') guiOpacity = 1
+  if (guiOpacity === '') guiOpacity = 1
   gui.style.opacity = 1 - guiOpacity;
 });

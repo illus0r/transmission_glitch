@@ -1,7 +1,7 @@
 'use strict';
 let twgl = require('twgl.js')
 let chroma = require('chroma-js')
-import { Pane } from 'tweakpane'
+import {Pane} from 'tweakpane'
 
 
 let timePrev = +new Date()
@@ -109,7 +109,7 @@ windowResized()
 // });
 
 var img = twgl.createTexture(gl, {
-  src: "face.jpg",
+  src:"face.jpg",
   crossOrigin: '',
 });
 
@@ -126,7 +126,7 @@ passes = {
   vh: new Pass({
     frag: require('./vh.frag'),
     size: 1024,
-  }),
+  }),  
   rsglitch: new Pass({
     frag: require('./RS_glitch.frag'),
     size: 1024,
@@ -141,14 +141,14 @@ const PARAMS = {
 };
 
 const pane = new Pane();
-pane.addInput(PARAMS, 'stripes', { min: 0, max: 1, });
-pane.addInput(PARAMS, 'vh', { min: 0, max: 1, });
-pane.addInput(PARAMS, 'rsglitch', { min: 0, max: 1, });
+pane.addInput(PARAMS, 'stripes',{min: 0,max: 1,});
+pane.addInput(PARAMS, 'vh',{min: 0,max: 1,});
+pane.addInput(PARAMS, 'rsglitch',{min: 0,max: 1,});
 
 
 
 function draw() {
-  if (!passes || !passes.rsglitch || !passes.rsglitch.draw) return;
+  if(!passes || !passes.rsglitch || !passes.rsglitch.draw) return;
 
   let b
   passes.init.draw({
@@ -157,7 +157,7 @@ function draw() {
       // u_resolution: [canvas.width, canvas.height],
       u_resolution: [1024, 1024],
       // u_tex_res: [1024, 1024],
-    },
+},
     // target: 'screen',
     target: 'self',
   })
@@ -352,6 +352,6 @@ canvas.addEventListener('click', event => {
   let gui = document.querySelector('.tp-dfwv')
   let guiOpacity = gui.style.opacity
   // console.log(guiOpacity)
-  if (guiOpacity === '') guiOpacity = 1
+  if(guiOpacity === '') guiOpacity = 1
   gui.style.opacity = 1 - guiOpacity;
 });

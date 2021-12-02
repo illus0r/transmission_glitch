@@ -17,7 +17,7 @@
     "glslify-deps": "^1.3.2"
   },
   "scripts": {
-    "start": "mkdir dist; cp ./face.jpg dist/; parcel serve ./index.html",
+    "start": "mkdir dist; cp ./face.jpg dist/; parcel serve ./index.html -p 1357",
     "build": "rm -rf ./dist; parcel build --no-source-maps --no-content-hash --public-url ./ ./index.html; cd dist; zip -r Archive.zip ./; mv Archive.zip ~/Downloads/",
     "copy": "rm -rf node_modules; cp -R ./ "
   },
